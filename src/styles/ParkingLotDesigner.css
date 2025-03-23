@@ -28,33 +28,31 @@ body {
   text-align: center;
 }
 
-.main-container {
+/* New integrated container */
+.integrated-container {
   display: flex;
+  flex-direction: row;
   width: 100%;
   max-width: 1400px;
-  height: calc(100vh - 100px);
   gap: 20px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+  padding: 0px;
 }
 
-.left-panel {
-  width: 320px;
-  display: flex;
-  flex-direction: column;
-}
-
-.right-panel {
+/* Grid wrapper */
+.grid-wrapper {
   flex: 1;
   display: flex;
   justify-content: center;
   align-items: flex-start;
-  padding: 20px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
   overflow: auto;
 }
 
+/* Update toolbar to fit the new layout */
 .toolbar {
+  width: 380px;
   padding: 15px;
   background-color: #f8f9fa;
   border-radius: 8px;
@@ -62,16 +60,19 @@ body {
   display: flex;
   flex-direction: column;
   gap: 15px;
+  flex-shrink: 0;
+  max-height: calc(100vh - 150px);
+  overflow-y: auto;
 }
 
 .category {
-  margin-bottom: 10px;
+  margin-bottom: 1px;
 }
 
 .category-title {
   font-size: 13px;
   color: #555;
-  margin-bottom: 8px;
+  margin-bottom: 2px;
   font-weight: 500;
   text-transform: uppercase;
   letter-spacing: 0.5px;
@@ -302,29 +303,40 @@ body {
   font-size: 11px;
 }
 
-/* Media queries for responsiveness */
-@media (max-width: 768px) {
-  .main-container {
+/* Responsive design for smaller screens */
+@media (max-width: 1000px) {
+  .integrated-container {
     flex-direction: column;
-    height: auto;
   }
 
-  .left-panel,
-  .right-panel {
+  .toolbar {
     width: 100%;
+    max-height: none;
   }
 
-  .left-panel {
-    max-width: none;
+  .category-tools {
+    justify-content: center;
+  }
+}
+
+@media (max-width: 768px) {
+  .integrated-container {
+    padding: 10px;
   }
 
   .grid-container {
-    grid-template-columns: repeat(30, 15px);
-    grid-template-rows: repeat(20, 15px);
+    transform: scale(0.9);
+    transform-origin: center top;
   }
 
   .grid-cell {
-    width: 15px;
-    height: 15px;
+    width: 20px;
+    height: 20px;
+  }
+
+  .tool {
+    min-width: 80px;
+    padding: 8px 12px;
+    font-size: 12px;
   }
 }

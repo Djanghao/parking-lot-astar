@@ -235,4 +235,33 @@ export default {
   padding: 6px 10px;
   font-weight: normal;
 }
+
+/* Add additional styling for the integrated layout */
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.category {
+  border-bottom: 1px solid #eee;
+  padding-bottom: 12px;
+}
+
+.category-title {
+  font-weight: 600;
+  color: #444;
+  margin-bottom: 10px;
+}
+
+.category-tools {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.tool {
+  flex: 0 0 auto;
+  margin-bottom: 5px;
+}
 </style>

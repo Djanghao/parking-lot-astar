@@ -164,3 +164,22 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.grid-cell {
+  box-sizing: border-box;
+}
+
+.parking-number,
+.number-over-marker {
+  font-size: 7px;
+  line-height: 1;
+}
+
+@media (max-height: 700px) {
+  .parking-number,
+  .number-over-marker {
+    font-size: 6px;
+  }
+}
+</style>

@@ -482,22 +482,20 @@ export default {
 <template>
   <div class="app">
     <h1 class="app-title">Parking Lot Designer</h1>
-    <div class="main-container">
-      <div class="left-panel">
-        <Toolbar
-          :active-tool="activeTool"
-          :is-path-visible="isPathVisible"
-          @update:active-tool="activeTool = $event"
-          @clear-all="handleClearAll"
-          @toggle-path-visibility="togglePathVisibility"
-          @import-file="handleImportFile"
-          @export-file="handleExportFile"
-          @generate-map="handleGenerateMap"
-          @load-default-map="handleLoadDefaultMap"
-          @search-spot="handleSearchSpot"
-        />
-      </div>
-      <div class="right-panel">
+    <div class="integrated-container">
+      <Toolbar
+        :active-tool="activeTool"
+        :is-path-visible="isPathVisible"
+        @update:active-tool="activeTool = $event"
+        @clear-all="handleClearAll"
+        @toggle-path-visibility="togglePathVisibility"
+        @import-file="handleImportFile"
+        @export-file="handleExportFile"
+        @generate-map="handleGenerateMap"
+        @load-default-map="handleLoadDefaultMap"
+        @search-spot="handleSearchSpot"
+      />
+      <div class="grid-wrapper">
         <Grid
           :grid="grid"
           :start-point="startPoint"
