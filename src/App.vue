@@ -85,6 +85,61 @@ export default {
       return getSpotIdFromCSV(parkingSpotIds.value, row, col);
     };
 
+    // 搜索车位并设置终点
+    const handleSearchSpot = (spotId) => {
+      // 在当前网格中查找拥有此编号的车位
+      const matchingCells = [];
+
+      // 首先在手动设置的number属性中查找
+      for (let r = 0; r < grid.value.length; r++) {
+        for (let c = 0; c < grid.value[r].length; c++) {
+          const cell = grid.value[r][c];
+          // 检查单元格是否有指定的编号
+          if (cell.number === spotId) {
+            matchingCells.push({ row: r, col: c });
+          }
+        }
+      }
+
+      // 如果在手动设置的编号中没有找到，则在CSV数据中查找
+      if (matchingCells.length === 0) {
+        for (let r = 0; r < parkingSpotIds.value.length; r++) {
+          if (!parkingSpotIds.value[r]) continue;
+
+          for (let c = 0; c < parkingSpotIds.value[r].length; c++) {
+            if (parkingSpotIds.value[r][c] === spotId) {
+              // 检查此位置的单元格是否为可通行区域或停车位
+              if (r < grid.value.length && c < grid.value[r].length) {
+                const cell = grid.value[r][c];
+                if (
+                  cell.type === "parking-space" ||
+                  cell.type === "open-area"
+                ) {
+                  matchingCells.push({ row: r, col: c });
+                }
+              }
+            }
+          }
+        }
+      }
+
+      // 如果找到了匹配的单元格，设置终点
+      if (matchingCells.length > 0) {
+        // 使用第一个匹配的单元格作为终点
+        endPoint.value = matchingCells[0];
+
+        // 如果已经设置了起点，自动计算路径
+        if (startPoint.value) {
+          calculatePath();
+          isPathVisible.value = true;
+        }
+
+        alert(`End point set to spot "${spotId}" successfully!`);
+      } else {
+        alert(`No spot with ID "${spotId}" found!`);
+      }
+    };
+
     // Load default parking lot design when the component mounts
     onMounted(async () => {
       try {
@@ -418,6 +473,7 @@ export default {
       handleLoadDefaultMap,
       handleSetCellNumber,
       handleResetMouseState,
+      handleSearchSpot,
     };
   },
 };
@@ -438,6 +494,7 @@ export default {
           @export-file="handleExportFile"
           @generate-map="handleGenerateMap"
           @load-default-map="handleLoadDefaultMap"
+          @search-spot="handleSearchSpot"
         />
       </div>
       <div class="right-panel">

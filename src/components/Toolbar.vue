@@ -1,5 +1,22 @@
 <template>
   <div class="toolbar">
+    <!-- 添加车位搜索功能，作为一个常规的类别 -->
+    <div class="category">
+      <div class="category-title">Spot Search</div>
+      <div class="search-input-container">
+        <input
+          type="text"
+          class="spot-search-input"
+          v-model="spotIdToSearch"
+          placeholder="Enter spot ID..."
+          @keyup.enter="handleSpotSearch"
+        />
+        <button class="tool path-tool" @click="handleSpotSearch">
+          Set as End
+        </button>
+      </div>
+    </div>
+
     <div
       v-for="(category, index) in toolCategories"
       :key="index"
@@ -47,6 +64,7 @@ export default {
   },
   data() {
     return {
+      spotIdToSearch: "",
       toolCategories: [
         {
           name: "Areas",
@@ -131,6 +149,11 @@ export default {
     };
   },
   methods: {
+    handleSpotSearch() {
+      if (this.spotIdToSearch.trim()) {
+        this.$emit("search-spot", this.spotIdToSearch.trim());
+      }
+    },
     handleToolClick(toolId) {
       if (toolId === "clear") {
         // Ask for confirmation before clearing
@@ -192,3 +215,24 @@ export default {
   },
 };
 </script>
+
+<style scoped>
+.search-input-container {
+  display: flex;
+  margin-top: 8px;
+}
+
+.spot-search-input {
+  flex: 1;
+  padding: 6px 8px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  margin-right: 5px;
+  font-size: 14px;
+}
+
+.search-button {
+  padding: 6px 10px;
+  font-weight: normal;
+}
+</style>
